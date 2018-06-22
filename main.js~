@@ -1,7 +1,7 @@
 var military = ["Thief", "Mugger", "Bandit", "Mercenary", "Pikeman", "Samurai", "Knight", "Hero"]; //names
 var militaryNum = new Array(military.length).fill(0); //amount (starts at zero)
 var militaryBaseCost = [20,150,500,10000,250000,1000000,50000000,10000000000];
-var militaryCost = militaryBaseCost;
+var militaryCost = new Array(military.length).fill(0);
 var militaryBaseGPS = [0.1,0.5,5,10,500,1000,100000,1000000];
 var militaryGPS = new Array(military.length).fill(0); //the gold per second produced (.reduce((a, b) => a + b, 0) gives the sum of the array)
 var militaryMultiplier = new Array(military.length).fill(1); //multiplier of the production (starts at 1)
