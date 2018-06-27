@@ -149,7 +149,7 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
 	    	o.setAttribute("id", "MilitaryNum"+i);
 	    	o.setAttribute("type", "text");
 	    	para.appendChild(o);
-		elementMilitary.appendChild(para);
+			elementMilitary.appendChild(para);
 		
 	    	var o = document.createElement("input");
 	    	o.setAttribute("id", "Military"+i);
@@ -165,7 +165,7 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
 	    	o.setAttribute("id", "ClergyNum"+i);
 	    	o.setAttribute("type", "text");
 	    	para.appendChild(o);
-		elementClergy.appendChild(para);
+			elementClergy.appendChild(para);
 		
 	    	var o = document.createElement("input");
 	    	o.setAttribute("id", "Clergy"+i);

@@ -33,3 +33,20 @@
     border: 1px solid #ccc;
     border-top: none;
 }
+
+.flexdivider {
+    display: flex;
+}
+
+#clickersection {
+	flex: 50%;
+	margin: 10px;
+}
+
+#tabsection {
+	flex: 50%;
+	margin: 10px;
+}
+.triflex {
+	flex: 33.33%;
+}

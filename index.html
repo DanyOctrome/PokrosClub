@@ -3,40 +3,63 @@
 <body>
 	<link rel="stylesheet" href="index.css">
 	<title>Pokros Club</title>
-	<h1>Pokros Club</h1>
 	
-	<p>Click the button bellow to collect tribute from the peasants in the village</p>
-	<p><input id="click" type="button" style="width:100px; height:50px" value="Collect Tribute" /></p>
-	<div class="tab">
-		<button class="tablinks" onclick="openTab(event, 'Resources')">Resources</button>
-		<button class="tablinks" onclick="openTab(event, 'Servants')">Servants</button>
-		<button class="tablinks" onclick="openTab(event, 'Upgrades')">Upgrades</button>
+	<div class="flexdivider">
+		<div id="clickersection">
+			<h1>Pokros Club</h1>
+			<p>This isn't even in alpha, it's incomplete af. Deal with it. Seriously.</p>
+			
+			<h2>Resources</h2>
+			<p id="Gold"></p>
+			<p id="Faith"></p>
+			<p id="Mana"></p>
+			
+			<h2>Collect Tribute</h2>
+			<p>Click the button bellow to collect tribute from the peasants in the village</p>
+			<p><input id="click" type="button" style="width:100px; height:50px" value="Collect Tribute" /></p>
+		</div>
+		
+		<div id="tabsection">
+			<!-- Tab buttons -->
+			<div class="tab">
+				<button id="DefaultTab" class="tablinks" onclick="openTab(event, 'Servants')">Servants</button>
+				<button class="tablinks" onclick="openTab(event, 'Upgrades')">Upgrades</button>
+				<button class="tablinks" onclick="openTab(event, 'Resources')">Resources</button>
+			</div>
+			
+			<!-- Tab content -->
+			<div id="Resources" class="tabcontent">
+				
+			</div>
+			
+			<div id="Servants" class="tabcontent">
+				<h2>Servants</h2>
+				<div class="flexdivider">
+					<div class="triflex">
+						<h3 style="color: green">Military</h3>
+						<div id="Military"></div>
+					</div>
+					
+					<div class="triflex">
+						<h3 style="color: red">Clergy</h3>
+						<div id="Clergy"></div>
+					</div>
+					
+					<div class="triflex">
+						<h3 style="color: blue">Magi</h3>
+						<p><strong>Sorcerers: </strong><output id="SorcerersNum" size="2" type="text" value="0" /></p>
+						<p><input id="Sorcerers" type="button" style="width:110px" /></p>
+					</div>
+				</div>
+			</div>
+			
+			<div id="Upgrades" class="tabcontent">
+				<h2>Upgrades</h2>
+				<p>The extremely lazy devoloper hasn't made any upgrades yet</p>
+			</div>
+		</div>
 	</div>
-	
-	<div id="Resources" class="tabcontent">
-		<h2>Resources</h2>
-		<p id="Gold"></p>
-		<p id="Faith"></p>
-		<p id="Mana"></p>
-	</div>
-	
-	<div id="Servants" class="tabcontent">
-		<h2>Servants</h2>
-		<h3 style="color: green">Military</h3>
-		<div id="Military"></div>
-	    	
-	    	<h3 style="color: red">Clergy</h3>
-	    	<div id="Clergy"></div>
-	    	
-		<h3 style="color: blue">Magi</h3>
-		<p><strong>Sorcerers: </strong><output id="SorcerersNum" size="2" type="text" value="0" /></p>
-	    	<p><input id="Sorcerers" type="button" style="width:110px" />&nbsp;It's not that hard to guess what they do, is it?</p>
-	</div>
-	
-	<div id="Upgrades" class="tabcontent">
-		<h2>Upgrades</h2>
-		<p>The extremely lazy devoloper hasn't made any upgrades yet</p>
-	</div>
+
 	
 	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript" src="tabs.js"></script>
