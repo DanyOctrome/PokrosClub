@@ -16,7 +16,7 @@ var clergyFPS = new Array(clergy.length).fill(0); //the gold per second produced
 var clergyMultiplier = new Array(clergy.length).fill(1); //multiplier of the production (starts at 1)
 var specialClergy = [];
 
-var magi = [];
+var magi = ["Illusionist","Gunpowder Expert","Sorcerer","Wizard","Summoner","Elementalist","Elder Wizard","Ancient Magus"];
 var magiNum = new Array(magi.length).fill(0); //amount (starts at zero)
 var magiBaseCost = [500,10000,500000,10000000,250000000,1000000000,50000000000,10000000000000];
 var magiCost = magiBaseCost;
@@ -50,58 +50,46 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
             priestCost = priestBaseCost * (Math.pow(1.15, priestNum));
             };
         };*/
-	Sorcerers.onclick = function() {
+	/*Sorcerers.onclick = function() {
         if (gold >= sorcererCost) {
             gold = gold - sorcererCost;
             sorcerersNum = sorcerersNum + 1;
             mps++;
             sorcererCost = sorcererBaseCost * (Math.pow(1.15, sorcerersNum));
             };
-        };
+        };*/
 		
-	gold += gps/60; //TODO: temporary (fast) solution, it's too intesive TODO: needs global gps
-	faith += clergyFPS.reduce((a, b) => a + b, 0)/60; //TODO: temporary (fast) solution, it's too intesive TODO: needs global gps
-	mana += magiMPS.reduce((a, b) => a + b, 0)/60; //TODO: temporary (fast) solution, it's too intesive TODO: needs global gps
+	gold += gps/60;
+	faith += fps/60;
+	mana += mps/60;
     };
     function draw(){
         /*Gps.value = gps.toFixed(0);
 		Fps.value = fps.toFixed(0);
 		Mps.value = mps.toFixed(0);*/
 		
-        document.getElementById("Gold").innerHTML  = "Gold: ".bold() + gold.toFixed(0) + " (per second: " + militaryGPS.reduce((a, b) => a + b, 0).toFixed(1) + ")"; //TODO: temporary (fast) solution, it's too intesive TODO: needs global gps
-	document.getElementById("Faith").innerHTML  = "Faith: ".bold() + faith.toFixed(0) + " (per second: " + fps.toFixed(0) + ")";
-	document.getElementById("Mana").innerHTML  = "Mana: ".bold() + mana.toFixed(0) + " (per second: " + mps.toFixed(0) + ")";
+        document.getElementById("Gold").innerHTML  = "Gold: ".bold() + gold.toFixed(0) + " (per second: " + gps.toFixed(1) + ")";
+		document.getElementById("Faith").innerHTML  = "Faith: ".bold() + faith.toFixed(0) + " (per second: " + fps.toFixed(1) + ")";
+		document.getElementById("Mana").innerHTML  = "Mana: ".bold() + mana.toFixed(0) + " (per second: " + mps.toFixed(1) + ")";
 	
-	//Buttons
-	//Military display	
-        Military0.value = militaryCost[0].toFixed(0) + " Gold";
-        MilitaryNum0.value = militaryNum[0].toFixed(0);
-        Military1.value = militaryCost[1].toFixed(0) + " Gold";
-        MilitaryNum1.value = militaryNum[1].toFixed(0);
-        Military2.value = militaryCost[2].toFixed(0) + " Gold";
-        MilitaryNum2.value = militaryNum[2].toFixed(0);
-        Military3.value = militaryCost[3].toFixed(0) + " Gold";
-        MilitaryNum3.value = militaryNum[3].toFixed(0);
-        Military4.value = militaryCost[4].toFixed(0) + " Gold";
-        MilitaryNum4.value = militaryNum[4].toFixed(0);
-        Military5.value = militaryCost[5].toFixed(0) + " Gold";
-        MilitaryNum5.value = militaryNum[5].toFixed(0);
-        Military6.value = militaryCost[6].toFixed(0) + " Gold";
-        MilitaryNum6.value = militaryNum[6].toFixed(0);
-        Military7.value = militaryCost[7].toFixed(0) + " Gold";
-        MilitaryNum7.value = militaryNum[7].toFixed(0);
+		//Buttons
+		//Military display	
+        for (var i = 0; i < military.length; i++) {
+	    	document.getElementById("Military"+i).value = militaryCost[i].toFixed(0) + " Gold";
+        	document.getElementById("MilitaryNum"+i).value = militaryNum[i].toFixed(0);
+		}
         
-        //Clergy
-	//Priests.value = priestCost.toFixed(0) + " Gold";
-        //PriestsNum.value = priestsNum.toFixed(0);
+        //Clergy display
     	for (var i = 0; i < clergy.length; i++) {
 	    	document.getElementById("Clergy"+i).value = clergyCost[i].toFixed(0) + " Gold";
         	document.getElementById("ClergyNum"+i).value = clergyNum[i].toFixed(0);
-	}
+		}
         
-        //Magi
-	Sorcerers.value = sorcererCost.toFixed(0) + " Gold";
-        SorcerersNum.value = sorcerersNum.toFixed(0);
+        //Magi display
+		for (var i = 0; i < magi.length; i++) {
+	    	document.getElementById("Magi"+i).value = magiCost[i].toFixed(0) + " Gold";
+        	document.getElementById("MagiNum"+i).value = magiNum[i].toFixed(0);
+		}
     };
     //function updateGPS()
     function militaryBuyClick(i) {
@@ -127,7 +115,7 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
             gold = gold - magiCost[i];
             magiNum[i]++;
             magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
-            gps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
+            mps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
             magiCost[i] = magiBaseCost[i] * (Math.pow(1.3, magiNum[i]));
 	}
     }
@@ -140,7 +128,7 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
     function createServantsDisplay() {
     	var elementMilitary = document.getElementById("Military");
     	var elementClergy = document.getElementById("Clergy");
-    	//var elementMagi = document.getElementById("Magi");
+    	var elementMagi = document.getElementById("Magi");
     	//Military
     	for (var i = 0; i < military.length; i++) {
 	    	var para = document.createElement("p");
@@ -156,7 +144,7 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
 	    	o.setAttribute("onClick", "militaryBuyClick("+i+")");
 	    	o.setAttribute("type", "button");
 	    	elementMilitary.appendChild(o);
-	}
+		}
     	//Clergy
     	for (var i = 0; i < clergy.length; i++) {
 	    	var para = document.createElement("p");
@@ -172,7 +160,23 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
 	    	o.setAttribute("onClick", "clergyBuyClick("+i+")");
 	    	o.setAttribute("type", "button");
 	    	elementClergy.appendChild(o);
-	}
+		}
+		//Magi
+		for (var i = 0; i < magi.length; i++) {
+	    	var para = document.createElement("p");
+	    	para.innerHTML += magi[i].bold() + ": ".bold();
+	    	var o = document.createElement("output");
+	    	o.setAttribute("id", "MagiNum"+i);
+	    	o.setAttribute("type", "text");
+	    	para.appendChild(o);
+			elementMagi.appendChild(para);
+		
+	    	var o = document.createElement("input");
+	    	o.setAttribute("id", "Magi"+i);
+	    	o.setAttribute("onClick", "magiBuyClick("+i+")");
+	    	o.setAttribute("type", "button");
+	    	elementMagi.appendChild(o);
+		}
     }
     
     createServantsDisplay()
