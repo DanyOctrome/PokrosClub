@@ -1,3 +1,19 @@
+body {
+	background-color: FEE9C8;
+}
+
+h1 {
+	color: 623B00;
+}
+
+h2 {
+	color: 623B00;
+}
+
+h3 {
+	color: 623B00;
+}
+
 /* Style the tab */
 .tab {
     overflow: hidden;
@@ -49,4 +65,10 @@
 }
 .triflex {
 	flex: 33.33%;
+}
+
+.unitThumbnail {
+	width: 45;
+	height: 45;
+	margin-right: 5;
 }

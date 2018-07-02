@@ -27,41 +27,16 @@ var specialMagi = [];
 
 var mixedUnits = [];
 
-var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, priestCost = 500, priestBaseCost = 500, sorcerersNum = 0, sorcererCost = 100000, sorcererBaseCost = 100000, gold = 0, gps = 0, faith = 0, fps = 0, mana = 0, mps = 0;
+var gold = 0, gps = 0, faith = 0, fps = 0, mana = 0, mps = 0;
+
+var imagesPath = "images/";
 
 
     function update(){
         click.onclick = function() {gold = gold + 1;};
-		
-        /*Military0.onclick = function() {
-        var i = 0;
-        if (gold >= militaryCost[i]) {
-            gold = gold - militaryCost[i];
-            militaryNum[i]++;
-            militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[0];// + militaryAdder[0];
-            militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.3, militaryNum[i]));
-            };
-        };*/
-	/*Priests.onclick = function() {
-        if (gold >= priestCost) {
-            gold = gold - priestCost;
-            priestNum = priestsNum + 1;
-            fps++;
-            priestCost = priestBaseCost * (Math.pow(1.15, priestNum));
-            };
-        };*/
-	/*Sorcerers.onclick = function() {
-        if (gold >= sorcererCost) {
-            gold = gold - sorcererCost;
-            sorcerersNum = sorcerersNum + 1;
-            mps++;
-            sorcererCost = sorcererBaseCost * (Math.pow(1.15, sorcerersNum));
-            };
-        };*/
-		
-	gold += gps/60;
-	faith += fps/60;
-	mana += mps/60;
+		gold += gps/60;
+		faith += fps/60;
+		mana += mps/60;
     };
     function draw(){
         /*Gps.value = gps.toFixed(0);
@@ -91,15 +66,18 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
         	document.getElementById("MagiNum"+i).value = magiNum[i].toFixed(0);
 		}
     };
-    //function updateGPS()
+    //function updateGPS() {}
+	//function updateMPS() {}
+	//function updateFPS() {}
+	
     function militaryBuyClick(i) {
     	if (gold >= militaryCost[i]) {
             gold = gold - militaryCost[i];
             militaryNum[i]++;
             militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[i]/* + militaryAdder[i]*/;
             gps = militaryGPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of gps
-            militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.3, militaryNum[i]));
-	}
+            militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.1, militaryNum[i]));
+		}
     }
     function clergyBuyClick(i) {
     	if (gold >= clergyCost[i]) {
@@ -107,8 +85,8 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
             clergyNum[i]++;
             clergyFPS[i] = clergyBaseFPS[i] * clergyNum[i] * clergyMultiplier[i]/* + clergyAdder[i]*/;
             fps = clergyFPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of fps
-            clergyCost[i] = clergyBaseCost[i] * (Math.pow(1.3, clergyNum[i]));
-	}
+            clergyCost[i] = clergyBaseCost[i] * (Math.pow(1.1, clergyNum[i]));
+		}
     }
     function magiBuyClick(i) {
     	if (gold >= magiCost[i]) {
@@ -116,8 +94,8 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
             magiNum[i]++;
             magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
             mps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
-            magiCost[i] = magiBaseCost[i] * (Math.pow(1.3, magiNum[i]));
-	}
+            magiCost[i] = magiBaseCost[i] * (Math.pow(1.1, magiNum[i]));
+		}
     }
     
     function giveGoldFaithMana(g, f, m) {
@@ -132,6 +110,13 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
     	//Military
     	for (var i = 0; i < military.length; i++) {
 	    	var para = document.createElement("p");
+			
+			// Unit Thumbnail
+			var img = document.createElement("img");
+			img.src = imagesPath + "military" + i + ".png";
+			img.className = "unitThumbnail";
+			para.appendChild(img);
+			
 	    	para.innerHTML += military[i].bold() + ": ".bold();
 	    	var o = document.createElement("output");
 	    	o.setAttribute("id", "MilitaryNum"+i);
@@ -148,6 +133,13 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
     	//Clergy
     	for (var i = 0; i < clergy.length; i++) {
 	    	var para = document.createElement("p");
+			
+			// Unit Thumbnail
+			var img = document.createElement("img");
+			img.src = imagesPath + "clergy" + i + ".png";
+			img.className = "unitThumbnail";
+			para.appendChild(img);
+			
 	    	para.innerHTML += clergy[i].bold() + ": ".bold();
 	    	var o = document.createElement("output");
 	    	o.setAttribute("id", "ClergyNum"+i);
@@ -164,6 +156,13 @@ var soldiersNum = 0, soldierCost = 15, soldierBaseCost = 15, priestsNum = 0, pri
 		//Magi
 		for (var i = 0; i < magi.length; i++) {
 	    	var para = document.createElement("p");
+			
+			// Unit Thumbnail
+			var img = document.createElement("img");
+			img.src = imagesPath + "magi" + i + ".png";
+			img.className = "unitThumbnail";
+			para.appendChild(img);
+			
 	    	para.innerHTML += magi[i].bold() + ": ".bold();
 	    	var o = document.createElement("output");
 	    	o.setAttribute("id", "MagiNum"+i);
