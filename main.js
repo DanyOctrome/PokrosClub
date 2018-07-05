@@ -31,153 +31,166 @@ var gold = 0, gps = 0, faith = 0, fps = 0, mana = 0, mps = 0;
 
 var imagesPath = "images/";
 
+var frequencyActive = 50, frequencyInactive = 1000, frequency = frequencyActive, frequencyDivider = 1000/frequency, focus = true;
 
-    function update(){
-        click.onclick = function() {gold = gold + 1;};
-		gold += gps/60;
-		faith += fps/60;
-		mana += mps/60;
-    };
-    function draw(){
-        /*Gps.value = gps.toFixed(0);
-		Fps.value = fps.toFixed(0);
-		Mps.value = mps.toFixed(0);*/
-		
-        document.getElementById("Gold").innerHTML  = "Gold: ".bold() + gold.toFixed(0) + " (per second: " + gps.toFixed(1) + ")";
-		document.getElementById("Faith").innerHTML  = "Faith: ".bold() + faith.toFixed(0) + " (per second: " + fps.toFixed(1) + ")";
-		document.getElementById("Mana").innerHTML  = "Mana: ".bold() + mana.toFixed(0) + " (per second: " + mps.toFixed(1) + ")";
+
+function update(){
+	click.onclick = function() {gold = gold + 1;};
+	gold += gps/frequencyDivider;
+	faith += fps/frequencyDivider;
+	mana += mps/frequencyDivider;
 	
-		//Buttons
-		//Military display	
-        for (var i = 0; i < military.length; i++) {
-	    	document.getElementById("Military"+i).value = militaryCost[i].toFixed(0) + " Gold";
-        	document.getElementById("MilitaryNum"+i).value = militaryNum[i].toFixed(0);
-		}
-        
-        //Clergy display
-    	for (var i = 0; i < clergy.length; i++) {
-	    	document.getElementById("Clergy"+i).value = clergyCost[i].toFixed(0) + " Gold";
-        	document.getElementById("ClergyNum"+i).value = clergyNum[i].toFixed(0);
-		}
-        
-        //Magi display
-		for (var i = 0; i < magi.length; i++) {
-	    	document.getElementById("Magi"+i).value = magiCost[i].toFixed(0) + " Gold";
-        	document.getElementById("MagiNum"+i).value = magiNum[i].toFixed(0);
-		}
-    };
-    //function updateGPS() {}
-	//function updateMPS() {}
-	//function updateFPS() {}
+};
+function draw(){
+	/*Gps.value = gps.toFixed(0);
+	Fps.value = fps.toFixed(0);
+	Mps.value = mps.toFixed(0);*/
 	
-    function militaryBuyClick(i) {
-    	if (gold >= militaryCost[i]) {
-            gold = gold - militaryCost[i];
-            militaryNum[i]++;
-            militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[i]/* + militaryAdder[i]*/;
-            gps = militaryGPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of gps
-            militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.1, militaryNum[i]));
-		}
-    }
-    function clergyBuyClick(i) {
-    	if (gold >= clergyCost[i]) {
-            gold = gold - clergyCost[i];
-            clergyNum[i]++;
-            clergyFPS[i] = clergyBaseFPS[i] * clergyNum[i] * clergyMultiplier[i]/* + clergyAdder[i]*/;
-            fps = clergyFPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of fps
-            clergyCost[i] = clergyBaseCost[i] * (Math.pow(1.1, clergyNum[i]));
-		}
-    }
-    function magiBuyClick(i) {
-    	if (gold >= magiCost[i]) {
-            gold = gold - magiCost[i];
-            magiNum[i]++;
-            magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
-            mps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
-            magiCost[i] = magiBaseCost[i] * (Math.pow(1.1, magiNum[i]));
-		}
-    }
-    
-    function giveGoldFaithMana(g, f, m) {
-    	gold += g;
-    	faith += f;
-    	mana += m;
-    }
-    function createServantsDisplay() {
-    	var elementMilitary = document.getElementById("Military");
-    	var elementClergy = document.getElementById("Clergy");
-    	var elementMagi = document.getElementById("Magi");
-    	//Military
-    	for (var i = 0; i < military.length; i++) {
-	    	var para = document.createElement("p");
-			
-			// Unit Thumbnail
-			var img = document.createElement("img");
-			img.src = imagesPath + "military" + i + ".png";
-			img.className = "unitThumbnail";
-			para.appendChild(img);
-			
-	    	para.innerHTML += military[i].bold() + ": ".bold();
-	    	var o = document.createElement("output");
-	    	o.setAttribute("id", "MilitaryNum"+i);
-	    	o.setAttribute("type", "text");
-	    	para.appendChild(o);
-			elementMilitary.appendChild(para);
+	document.getElementById("Gold").innerHTML  = "Gold: ".bold() + gold.toFixed(0) + " (per second: " + gps.toFixed(1) + ")";
+	document.getElementById("Faith").innerHTML  = "Faith: ".bold() + faith.toFixed(0) + " (per second: " + fps.toFixed(1) + ")";
+	document.getElementById("Mana").innerHTML  = "Mana: ".bold() + mana.toFixed(0) + " (per second: " + mps.toFixed(1) + ")";
+
+	//Buttons
+	//Military display	
+	for (var i = 0; i < military.length; i++) {
+		document.getElementById("Military"+i).value = militaryCost[i].toFixed(0) + " Gold";
+		document.getElementById("MilitaryNum"+i).value = militaryNum[i].toFixed(0);
+	}
+	
+	//Clergy display
+	for (var i = 0; i < clergy.length; i++) {
+		document.getElementById("Clergy"+i).value = clergyCost[i].toFixed(0) + " Gold";
+		document.getElementById("ClergyNum"+i).value = clergyNum[i].toFixed(0);
+	}
+	
+	//Magi display
+	for (var i = 0; i < magi.length; i++) {
+		document.getElementById("Magi"+i).value = magiCost[i].toFixed(0) + " Gold";
+		document.getElementById("MagiNum"+i).value = magiNum[i].toFixed(0);
+	}
+};
+//function updateGPS() {}
+//function updateMPS() {}
+//function updateFPS() {}
+
+function militaryBuyClick(i) {
+	if (gold >= militaryCost[i]) {
+		gold = gold - militaryCost[i];
+		militaryNum[i]++;
+		militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[i]/* + militaryAdder[i]*/;
+		gps = militaryGPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of gps
+		militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.1, militaryNum[i]));
+	}
+}
+function clergyBuyClick(i) {
+	if (gold >= clergyCost[i]) {
+		gold = gold - clergyCost[i];
+		clergyNum[i]++;
+		clergyFPS[i] = clergyBaseFPS[i] * clergyNum[i] * clergyMultiplier[i]/* + clergyAdder[i]*/;
+		fps = clergyFPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of fps
+		clergyCost[i] = clergyBaseCost[i] * (Math.pow(1.1, clergyNum[i]));
+	}
+}
+function magiBuyClick(i) {
+	if (gold >= magiCost[i]) {
+		gold = gold - magiCost[i];
+		magiNum[i]++;
+		magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
+		mps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
+		magiCost[i] = magiBaseCost[i] * (Math.pow(1.1, magiNum[i]));
+	}
+}
+
+function giveGoldFaithMana(g, f, m) {
+	gold += g;
+	faith += f;
+	mana += m;
+}
+function createServantsDisplay() {
+	var elementMilitary = document.getElementById("Military");
+	var elementClergy = document.getElementById("Clergy");
+	var elementMagi = document.getElementById("Magi");
+	//Military
+	for (var i = 0; i < military.length; i++) {
+		var para = document.createElement("p");
 		
-	    	var o = document.createElement("input");
-	    	o.setAttribute("id", "Military"+i);
-	    	o.setAttribute("onClick", "militaryBuyClick("+i+")");
-	    	o.setAttribute("type", "button");
-	    	elementMilitary.appendChild(o);
-		}
-    	//Clergy
-    	for (var i = 0; i < clergy.length; i++) {
-	    	var para = document.createElement("p");
-			
-			// Unit Thumbnail
-			var img = document.createElement("img");
-			img.src = imagesPath + "clergy" + i + ".png";
-			img.className = "unitThumbnail";
-			para.appendChild(img);
-			
-	    	para.innerHTML += clergy[i].bold() + ": ".bold();
-	    	var o = document.createElement("output");
-	    	o.setAttribute("id", "ClergyNum"+i);
-	    	o.setAttribute("type", "text");
-	    	para.appendChild(o);
-			elementClergy.appendChild(para);
+		// Unit Thumbnail
+		var img = document.createElement("img");
+		img.src = imagesPath + "military" + i + ".png";
+		img.className = "unitThumbnail";
+		para.appendChild(img);
 		
-	    	var o = document.createElement("input");
-	    	o.setAttribute("id", "Clergy"+i);
-	    	o.setAttribute("onClick", "clergyBuyClick("+i+")");
-	    	o.setAttribute("type", "button");
-	    	elementClergy.appendChild(o);
-		}
-		//Magi
-		for (var i = 0; i < magi.length; i++) {
-	    	var para = document.createElement("p");
-			
-			// Unit Thumbnail
-			var img = document.createElement("img");
-			img.src = imagesPath + "magi" + i + ".png";
-			img.className = "unitThumbnail";
-			para.appendChild(img);
-			
-	    	para.innerHTML += magi[i].bold() + ": ".bold();
-	    	var o = document.createElement("output");
-	    	o.setAttribute("id", "MagiNum"+i);
-	    	o.setAttribute("type", "text");
-	    	para.appendChild(o);
-			elementMagi.appendChild(para);
+		para.innerHTML += military[i].bold() + ": ".bold();
+		var o = document.createElement("output");
+		o.setAttribute("id", "MilitaryNum"+i);
+		o.setAttribute("type", "text");
+		para.appendChild(o);
+		elementMilitary.appendChild(para);
+	
+		var o = document.createElement("input");
+		o.setAttribute("id", "Military"+i);
+		o.setAttribute("onClick", "militaryBuyClick("+i+")");
+		o.setAttribute("type", "button");
+		elementMilitary.appendChild(o);
+	}
+	//Clergy
+	for (var i = 0; i < clergy.length; i++) {
+		var para = document.createElement("p");
 		
-	    	var o = document.createElement("input");
-	    	o.setAttribute("id", "Magi"+i);
-	    	o.setAttribute("onClick", "magiBuyClick("+i+")");
-	    	o.setAttribute("type", "button");
-	    	elementMagi.appendChild(o);
-		}
-    }
-    
-    createServantsDisplay()
-    var mainloop = function() {update(), draw()}; 
-    setInterval(mainloop, 16);
+		// Unit Thumbnail
+		var img = document.createElement("img");
+		img.src = imagesPath + "clergy" + i + ".png";
+		img.className = "unitThumbnail";
+		para.appendChild(img);
+		
+		para.innerHTML += clergy[i].bold() + ": ".bold();
+		var o = document.createElement("output");
+		o.setAttribute("id", "ClergyNum"+i);
+		o.setAttribute("type", "text");
+		para.appendChild(o);
+		elementClergy.appendChild(para);
+	
+		var o = document.createElement("input");
+		o.setAttribute("id", "Clergy"+i);
+		o.setAttribute("onClick", "clergyBuyClick("+i+")");
+		o.setAttribute("type", "button");
+		elementClergy.appendChild(o);
+	}
+	//Magi
+	for (var i = 0; i < magi.length; i++) {
+		var para = document.createElement("p");
+		
+		// Unit Thumbnail
+		var img = document.createElement("img");
+		img.src = imagesPath + "magi" + i + ".png";
+		img.className = "unitThumbnail";
+		para.appendChild(img);
+		
+		para.innerHTML += magi[i].bold() + ": ".bold();
+		var o = document.createElement("output");
+		o.setAttribute("id", "MagiNum"+i);
+		o.setAttribute("type", "text");
+		para.appendChild(o);
+		elementMagi.appendChild(para);
+	
+		var o = document.createElement("input");
+		o.setAttribute("id", "Magi"+i);
+		o.setAttribute("onClick", "magiBuyClick("+i+")");
+		o.setAttribute("type", "button");
+		elementMagi.appendChild(o);
+	}
+}
+
+function updateFrequency(f) {
+	frequency = f;
+	frequencyDivider = 1000/frequency;
+	console.log("Updated frequency to: " + frequency);
+	clearInterval(loop);
+	loop = setInterval(mainloop, frequency);
+}
+
+createServantsDisplay()
+function mainloop() {update(); draw();}; 
+var loop = setInterval(mainloop, frequency);
+window.onfocus =  function () {updateFrequency(frequencyActive);};
+window.onblur = function () {updateFrequency(frequencyInactive);};
