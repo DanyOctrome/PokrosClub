@@ -14,6 +14,19 @@ h3 {
 	color: 623B00;
 }
 
+button {
+	background-color: #e7e7e7;
+    color: 623B00;
+    border: 2px solid #623B00;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: #623B00;
+    color: white;
+}
+
 /* Style the tab */
 .tab {
     overflow: hidden;
@@ -35,6 +48,7 @@ h3 {
 /* Change background color of buttons on hover */
 .tab button:hover {
     background-color: #ddd;
+	color: black;
 }
 
 /* Create an active/current tablink class */

@@ -53,19 +53,19 @@ function draw(){
 	//Buttons
 	//Military display	
 	for (var i = 0; i < military.length; i++) {
-		document.getElementById("Military"+i).value = militaryCost[i].toFixed(0) + " Gold";
+		document.getElementById("Military"+i).innerHTML = militaryCost[i].toFixed(0) + " Gold";
 		document.getElementById("MilitaryNum"+i).value = militaryNum[i].toFixed(0);
 	}
 	
 	//Clergy display
 	for (var i = 0; i < clergy.length; i++) {
-		document.getElementById("Clergy"+i).value = clergyCost[i].toFixed(0) + " Gold";
+		document.getElementById("Clergy"+i).innerHTML = clergyCost[i].toFixed(0) + " Gold";
 		document.getElementById("ClergyNum"+i).value = clergyNum[i].toFixed(0);
 	}
 	
 	//Magi display
 	for (var i = 0; i < magi.length; i++) {
-		document.getElementById("Magi"+i).value = magiCost[i].toFixed(0) + " Gold";
+		document.getElementById("Magi"+i).innerHTML = magiCost[i].toFixed(0) + " Gold";
 		document.getElementById("MagiNum"+i).value = magiNum[i].toFixed(0);
 	}
 };
@@ -127,10 +127,10 @@ function createServantsDisplay() {
 		para.appendChild(o);
 		elementMilitary.appendChild(para);
 	
-		var o = document.createElement("input");
+		var o = document.createElement("button");
 		o.setAttribute("id", "Military"+i);
 		o.setAttribute("onClick", "militaryBuyClick("+i+")");
-		o.setAttribute("type", "button");
+		//o.setAttribute("type", "button");
 		elementMilitary.appendChild(o);
 	}
 	//Clergy
@@ -150,10 +150,10 @@ function createServantsDisplay() {
 		para.appendChild(o);
 		elementClergy.appendChild(para);
 	
-		var o = document.createElement("input");
+		var o = document.createElement("button");
 		o.setAttribute("id", "Clergy"+i);
 		o.setAttribute("onClick", "clergyBuyClick("+i+")");
-		o.setAttribute("type", "button");
+		//o.setAttribute("type", "button");
 		elementClergy.appendChild(o);
 	}
 	//Magi
@@ -173,10 +173,10 @@ function createServantsDisplay() {
 		para.appendChild(o);
 		elementMagi.appendChild(para);
 	
-		var o = document.createElement("input");
+		var o = document.createElement("button");
 		o.setAttribute("id", "Magi"+i);
 		o.setAttribute("onClick", "magiBuyClick("+i+")");
-		o.setAttribute("type", "button");
+		//o.setAttribute("type", "button");
 		elementMagi.appendChild(o);
 	}
 }
