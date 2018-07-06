@@ -33,6 +33,8 @@ var imagesPath = "images/";
 
 var frequencyActive = 50, frequencyInactive = 1000, frequency = frequencyActive, frequencyDivider = 1000/frequency, focus = true;
 
+var retaehc = false;
+
 
 function update(){
 	click.onclick = function() {gold = gold + 1;};
@@ -42,10 +44,6 @@ function update(){
 	
 };
 function draw(){
-	/*Gps.value = gps.toFixed(0);
-	Fps.value = fps.toFixed(0);
-	Mps.value = mps.toFixed(0);*/
-	
 	document.getElementById("Gold").innerHTML  = "Gold: ".bold() + gold.toFixed(0) + " (per second: " + gps.toFixed(1) + ")";
 	document.getElementById("Faith").innerHTML  = "Faith: ".bold() + faith.toFixed(0) + " (per second: " + fps.toFixed(1) + ")";
 	document.getElementById("Mana").innerHTML  = "Mana: ".bold() + mana.toFixed(0) + " (per second: " + mps.toFixed(1) + ")";
@@ -69,16 +67,25 @@ function draw(){
 		document.getElementById("MagiNum"+i).value = magiNum[i].toFixed(0);
 	}
 };
-//function updateGPS() {}
-//function updateMPS() {}
-//function updateFPS() {}
+
+function updateGPS () {
+	gps = militaryGPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of gps
+}
+
+function updateFPS() {
+	fps = clergyFPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of fps
+}
+
+function updateMPS() {
+	mps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
+}
 
 function militaryBuyClick(i) {
 	if (gold >= militaryCost[i]) {
 		gold = gold - militaryCost[i];
 		militaryNum[i]++;
 		militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[i]/* + militaryAdder[i]*/;
-		gps = militaryGPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of gps
+		updateGPS();
 		militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.1, militaryNum[i]));
 	}
 }
@@ -87,7 +94,7 @@ function clergyBuyClick(i) {
 		gold = gold - clergyCost[i];
 		clergyNum[i]++;
 		clergyFPS[i] = clergyBaseFPS[i] * clergyNum[i] * clergyMultiplier[i]/* + clergyAdder[i]*/;
-		fps = clergyFPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of fps
+		updateFPS();
 		clergyCost[i] = clergyBaseCost[i] * (Math.pow(1.1, clergyNum[i]));
 	}
 }
@@ -96,7 +103,7 @@ function magiBuyClick(i) {
 		gold = gold - magiCost[i];
 		magiNum[i]++;
 		magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
-		mps = magiMPS.reduce((a, b) => a + b, 0); //TODO: update with more sources of mps
+		updateMPS();
 		magiCost[i] = magiBaseCost[i] * (Math.pow(1.1, magiNum[i]));
 	}
 }
@@ -105,6 +112,7 @@ function giveGoldFaithMana(g, f, m) {
 	gold += g;
 	faith += f;
 	mana += m;
+	retaehc = true;
 }
 function createServantsDisplay() {
 	var elementMilitary = document.getElementById("Military");
@@ -184,9 +192,65 @@ function createServantsDisplay() {
 function updateFrequency(f) {
 	frequency = f;
 	frequencyDivider = 1000/frequency;
-	console.log("Updated frequency to: " + frequency);
+	//console.log("Updated frequency to: " + frequency);
 	clearInterval(loop);
 	loop = setInterval(mainloop, frequency);
+}
+
+function calculateGPS () {
+	for (var i = 0; i < military.length; i++) {
+		militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[i]/* + militaryAdder[i]*/;
+	}
+	
+	updateGPS()
+}
+
+function calculateFPS() {
+	for (var i = 0; i < clergy.length; i++) {
+		clergyFPS[i] = clergyBaseFPS[i] * clergyNum[i] * clergyMultiplier[i]/* + clergyAdder[i]*/;
+	}
+	
+	updateFPS()
+}
+
+function calculateMPS() {
+	for (var i = 0; i < magi.length; i++) {
+		magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
+	}
+	
+	updateMPS();
+}
+
+function calculateTriVarPS() {
+	calculateGPS();
+	calculateFPS();
+	calculateMPS();
+}
+
+function saveGame() {
+	localStorage.setItem("militaryNum", JSON.stringify(militaryNum));
+	localStorage.setItem("clergyNum", JSON.stringify(clergyNum));
+	localStorage.setItem("magiNum", JSON.stringify(magiNum));
+	
+	localStorage.setItem("gold", JSON.stringify(gold));
+	localStorage.setItem("faith", JSON.stringify(faith));
+	localStorage.setItem("mana", JSON.stringify(mana));
+	
+	localStorage.setItem("retaehc", JSON.stringify(retaehc));
+}
+
+function loadGame() {
+	militaryNum = JSON.parse(localStorage.getItem("militaryNum"));
+	clergyNum = JSON.parse(localStorage.getItem("clergyNum"));
+	magiNum = JSON.parse(localStorage.getItem("magiNum"));
+	
+	gold = JSON.parse(localStorage.getItem("gold"));
+	faith = JSON.parse(localStorage.getItem("faith"));
+	mana = JSON.parse(localStorage.getItem("mana"));
+	
+	retaehc = JSON.parse(localStorage.getItem("retaehc"));
+	
+	calculateTriVarPS();
 }
 
 createServantsDisplay()

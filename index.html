@@ -24,12 +24,15 @@
 			<div class="tab">
 				<button id="DefaultTab" class="tablinks" onclick="openTab(event, 'Servants')">Servants</button>
 				<button class="tablinks" onclick="openTab(event, 'Upgrades')">Upgrades</button>
-				<button class="tablinks" onclick="openTab(event, 'Resources')">Resources</button>
+				<button class="tablinks" onclick="openTab(event, 'Pokros')">Pokros</button>
+				<button class="tablinks" onclick="openTab(event, 'Options')">Options</button>
 			</div>
 			
 			<!-- Tab content -->
-			<div id="Resources" class="tabcontent">
-				
+			<div id="Pokros" class="tabcontent">
+				<h2>Pokros Club</h2>
+				<p>Your Pokros hang out here and you can control their minds here. Oops, I meant: you can <b>manage</b> them here.</p>
+				<p><i>Feature Coming Soon</i></p>
 			</div>
 			
 			<div id="Servants" class="tabcontent">
@@ -56,9 +59,14 @@
 				<h2>Upgrades</h2>
 				<p>The extremely lazy devoloper hasn't made any upgrades yet</p>
 			</div>
+			
+			<div id="Options" class="tabcontent">
+				<h2>Options</h2>
+				<button onclick="saveGame()">Save Game</button>
+				<button onclick="loadGame()">Load Game</button>
+			</div>
 		</div>
 	</div>
-
 	
 	<script type="text/javascript" src="main.js"></script>
 	<script type="text/javascript" src="tabs.js"></script>
