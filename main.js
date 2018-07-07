@@ -280,6 +280,7 @@ function updateMagiCost () {
 	}
 }
 
+loadGame();
 createServantsDisplay()
 function mainloop() {update(); draw();}; 
 var loop = setInterval(mainloop, frequency);
