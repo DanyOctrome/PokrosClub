@@ -1,7 +1,7 @@
 var military = ["Thief", "Mugger", "Bandit", "Mercenary", "Pikeman", "Samurai", "Knight", "Hero"]; //names
 var militaryNum = new Array(military.length).fill(0); //amount (starts at zero)
 var militaryBaseCost = [20,150,500,10000,250000,1000000,50000000,10000000000];
-var militaryCost = militaryBaseCost;
+var militaryCost = militaryBaseCost.slice();
 var militaryBaseGPS = [0.1,0.5,5,10,500,1000,100000,1000000];
 var militaryGPS = new Array(military.length).fill(0); //the gold per second produced (.reduce((a, b) => a + b, 0) gives the sum of the array)
 var militaryMultiplier = new Array(military.length).fill(1); //multiplier of the production (starts at 1)
@@ -10,7 +10,7 @@ var specialMilitary = [];
 var clergy = ["Doomsayer", "Fake Priest", "Witchdoctor", "Shaman", "Monk", "Priest", "Bishop", "Messiah"];
 var clergyNum = new Array(clergy.length).fill(0); //amount (starts at zero)
 var clergyBaseCost = [500,10000,500000,10000000,250000000,1000000000,50000000000,10000000000000];
-var clergyCost = clergyBaseCost;
+var clergyCost = clergyBaseCost.slice();
 var clergyBaseFPS = [0.1,0.5,5,10,500,1000,100000,1000000];
 var clergyFPS = new Array(clergy.length).fill(0); //the gold per second produced (.reduce((a, b) => a + b, 0) gives the sum of the array)
 var clergyMultiplier = new Array(clergy.length).fill(1); //multiplier of the production (starts at 1)
@@ -19,7 +19,7 @@ var specialClergy = [];
 var magi = ["Illusionist","Gunpowder Expert","Sorcerer","Wizard","Summoner","Elementalist","Elder Wizard","Ancient Magus"];
 var magiNum = new Array(magi.length).fill(0); //amount (starts at zero)
 var magiBaseCost = [500,10000,500000,10000000,250000000,1000000000,50000000000,10000000000000];
-var magiCost = magiBaseCost;
+var magiCost = magiBaseCost.slice();
 var magiBaseMPS = [0.1,0.5,5,10,500,1000,100000,1000000];
 var magiMPS = new Array(magi.length).fill(0); //the gold per second produced (.reduce((a, b) => a + b, 0) gives the sum of the array)
 var magiMultiplier = new Array(magi.length).fill(1); //multiplier of the production (starts at 1)
@@ -275,7 +275,7 @@ function updateClergyCost () {
 }
 
 function updateMagiCost () {
-	for (var i = 0; i < military.length; i++) {
+	for (var i = 0; i < magi.length; i++) {
 		magiCost[i] = magiBaseCost[i] * (Math.pow(costBaseNumber, magiNum[i]));
 	}
 }
