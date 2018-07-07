@@ -35,6 +35,8 @@ var frequencyActive = 50, frequencyInactive = 1000, frequency = frequencyActive,
 
 var retaehc = false;
 
+var costBaseNumber = 1.1;
+
 
 function update(){
 	click.onclick = function() {gold = gold + 1;};
@@ -86,7 +88,7 @@ function militaryBuyClick(i) {
 		militaryNum[i]++;
 		militaryGPS[i] = militaryBaseGPS[i] * militaryNum[i] * militaryMultiplier[i]/* + militaryAdder[i]*/;
 		updateGPS();
-		militaryCost[i] = militaryBaseCost[i] * (Math.pow(1.1, militaryNum[i]));
+		militaryCost[i] = militaryBaseCost[i] * (Math.pow(costBaseNumber, militaryNum[i]));
 	}
 }
 function clergyBuyClick(i) {
@@ -95,7 +97,7 @@ function clergyBuyClick(i) {
 		clergyNum[i]++;
 		clergyFPS[i] = clergyBaseFPS[i] * clergyNum[i] * clergyMultiplier[i]/* + clergyAdder[i]*/;
 		updateFPS();
-		clergyCost[i] = clergyBaseCost[i] * (Math.pow(1.1, clergyNum[i]));
+		clergyCost[i] = clergyBaseCost[i] * (Math.pow(costBaseNumber, clergyNum[i]));
 	}
 }
 function magiBuyClick(i) {
@@ -104,7 +106,7 @@ function magiBuyClick(i) {
 		magiNum[i]++;
 		magiMPS[i] = magiBaseMPS[i] * magiNum[i] * magiMultiplier[i]/* + magiAdder[i]*/;
 		updateMPS();
-		magiCost[i] = magiBaseCost[i] * (Math.pow(1.1, magiNum[i]));
+		magiCost[i] = magiBaseCost[i] * (Math.pow(costBaseNumber, magiNum[i]));
 	}
 }
 
@@ -251,6 +253,31 @@ function loadGame() {
 	retaehc = JSON.parse(localStorage.getItem("retaehc"));
 	
 	calculateTriVarPS();
+	updateTriCost();
+}
+
+function updateTriCost() {
+	updateMilitaryCost();
+	updateClergyCost();
+	updateMagiCost();
+}
+
+function updateMilitaryCost () {
+	for (var i = 0; i < military.length; i++) {
+		militaryCost[i] = militaryBaseCost[i] * (Math.pow(costBaseNumber, militaryNum[i]));
+	}
+}
+
+function updateClergyCost () {
+	for (var i = 0; i < clergy.length; i++) {
+		clergyCost[i] = clergyBaseCost[i] * (Math.pow(costBaseNumber, clergyNum[i]));
+	}
+}
+
+function updateMagiCost () {
+	for (var i = 0; i < military.length; i++) {
+		magiCost[i] = magiBaseCost[i] * (Math.pow(costBaseNumber, magiNum[i]));
+	}
 }
 
 createServantsDisplay()
