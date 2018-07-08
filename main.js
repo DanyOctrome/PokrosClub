@@ -242,15 +242,29 @@ function saveGame() {
 }
 
 function loadGame() {
-	militaryNum = JSON.parse(localStorage.getItem("militaryNum"));
-	clergyNum = JSON.parse(localStorage.getItem("clergyNum"));
-	magiNum = JSON.parse(localStorage.getItem("magiNum"));
+	var loadedMilitaryNum = JSON.parse(localStorage.getItem("militaryNum"));
+	var loadedClergyNum = JSON.parse(localStorage.getItem("clergyNum"));
+	var loadedMagiNum = JSON.parse(localStorage.getItem("magiNum"));
 	
-	gold = JSON.parse(localStorage.getItem("gold"));
-	faith = JSON.parse(localStorage.getItem("faith"));
-	mana = JSON.parse(localStorage.getItem("mana"));
+	var loadedGold = JSON.parse(localStorage.getItem("gold"));
+	var loadedFaith = JSON.parse(localStorage.getItem("faith"));
+	var loadedMana = JSON.parse(localStorage.getItem("mana"));
 	
-	retaehc = JSON.parse(localStorage.getItem("retaehc"));
+	var loadedRetaehc = JSON.parse(localStorage.getItem("retaehc"));
+	
+	if (loadedMilitaryNum == null || loadedClergyNum == null || loadedMagiNum == null || loadedGold == null || loadedFaith == null || loadedMana == null || loadedRetaehc == null) {
+		return;
+	}
+	
+	militaryNum = loadedMilitaryNum;
+	clergyNum = loadedClergyNum;
+	magiNum = loadedMagiNum;
+	
+	gold = loadedGold;
+	faith = loadedFaith;
+	mana = loadedMana;
+	
+	retaehc = loadedRetaehc;
 	
 	calculateTriVarPS();
 	updateTriCost();
